@@ -8,22 +8,37 @@ import Product from "./Product";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import CreateUser from "./CreateUser";
 import EditUser from "./EditUser";
+import { UserProvider } from "./UserContext";
 
 function App() {
   return (
     <Router>
       <div id="wrapper">
         <Sidebar></Sidebar>
-        <div id="content-wrapper" class="d-flex flex-column">
+        <div id="content-wrapper" className="d-flex flex-column">
           <div id="content">
             <Topbar></Topbar>
-            <div class="container-fluid">
+            <div className="container-fluid">
               <Switch>
-                <Route path="/" component={Dashboard} exact={true}></Route>
-                <Route path="/user" component={User} exact={true}></Route>
-                <Route path="/product" component={Product} exact={true}></Route>
-                <Route path="/create-user" component={CreateUser} exact={true}></Route>
-                <Route path="/user/edit/:id" component={EditUser} exact={true}></Route>
+                <UserProvider>
+                  <Route path="/" component={Dashboard} exact={true}></Route>
+                  <Route path="/user" component={User} exact={true}></Route>
+                  <Route
+                    path="/product"
+                    component={Product}
+                    exact={true}
+                  ></Route>
+                  <Route
+                    path="/create-user"
+                    component={CreateUser}
+                    exact={true}
+                  ></Route>
+                  <Route
+                    path="/user/edit/:id"
+                    component={EditUser}
+                    exact={true}
+                  ></Route>
+                </UserProvider>
               </Switch>
             </div>
           </div>

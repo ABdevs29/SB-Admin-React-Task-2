@@ -1,31 +1,23 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import UserContext from "./UserContext";
 
 function User() {
-  const userData = [
-    {
-      id: 1,
-      name: "Tiger Nixon",
-      position: "System Architect",
-      office: "Edinburgh",
-      age: 61,
-      startDate: "2011/04/25",
-      salary: "$320,800",
-    },
-    {
-      id: 2,
-      name: "Tiger Nixon",
-      position: "System Architect",
-      office: "Edinburgh",
-      age: 61,
-      startDate: "2011/04/25",
-      salary: "$320,800",
-    },
-  ];
+  const userContext = useContext(UserContext);
+
+  const handleDelete = (index) => {
+    let confirm = window.confirm("Do you want to Delete?");
+
+    if (confirm) {
+      userContext.userList.splice(index -1, 1);
+      userContext.setUserList([...userContext.userList]);
+    }
+  }
+
   return (
     <div>
-      <h1 class="h3 mb-2 text-gray-800">Users</h1>
-      <p class="mb-4">
+      <h1 className="h3 mb-2 text-gray-800">Users</h1>
+      <p className="mb-4">
         DataTables is a third party plugin that is used to generate the demo
         table below. For more information about DataTables, please visit the{" "}
         <a target="_blank" href="https://datatables.net">
@@ -35,18 +27,18 @@ function User() {
       </p>
       <Link
         to="/create-user"
-        class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
+        className="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm"
       >
-        <i class="fas fa-download fa-sm text-white-50"></i> Create User
+        <i className="fas fa-download fa-sm text-white-50"></i> Create User
       </Link>
-      <div class="card shadow mb-4">
-        <div class="card-header py-3">
-          <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+      <div className="card shadow mb-4">
+        <div className="card-header py-3">
+          <h6 className="m-0 font-weight-bold text-primary">DataTables Example</h6>
         </div>
-        <div class="card-body">
-          <div class="table-responsive">
+        <div className="card-body">
+          <div className="table-responsive">
             <table
-              class="table table-bordered"
+              className="table table-bordered"
               id="dataTable"
               width="100%"
               cellspacing="0"
@@ -76,19 +68,19 @@ function User() {
                 </tr>
               </tfoot>
               <tbody>
-                {userData.map((obj) => {
+                {userContext.userList.map((obj, index) => {
                   return (
                     <tr>
-                      <td>{obj.id}</td>
-                      <td>{obj.name}</td>
+                      <td>{index + 1}</td>
+                      <td>{obj.userName}</td>
                       <td>{obj.position}</td>
                       <td>{obj.office}</td>
                       <td>{obj.age}</td>
                       <td>{obj.startDate}</td>
                       <td>{obj.salary}</td>
                       <td>
-                        <Link to={`user/edit/${obj.id}`} className="btn btn-xs btn-primary">Edit</Link>
-                        <button className="btn btn-xs btn-danger">
+                        <Link to={`user/edit/${index + 1}`} className="btn btn-xs btn-primary">Edit</Link>
+                        <button className="btn btn-xs btn-danger" onClick={() => {handleDelete(index + 1)}}>
                           Delete
                         </button>
                       </td>
